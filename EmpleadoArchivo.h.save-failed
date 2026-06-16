@@ -1,0 +1,16 @@
+#ifndef EMPLEADOARCHIVO_H
+#define EMPLEADOARCHIVO_H
+
+
+class EmpleadoArchivo
+{
+    public:
+        EmpleadoArchivo();
+        virtual ~EmpleadoArchivo();
+
+    protected:
+
+    private:
+};
+
+#endif // EMPLEADOARCHIVO_H
