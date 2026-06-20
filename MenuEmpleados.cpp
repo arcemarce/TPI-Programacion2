@@ -1,4 +1,6 @@
 #include "MenuEmpleados.h"
+#include "Empleado.h"
+#include "EmpleadoArchivo.h"
 #include <iostream>
 
 
@@ -31,7 +33,7 @@ void MenuEmpleados::mostrarOpciones()
     cout << "2. LISTADO EMPLEADOS" << endl;
     cout << "3. VISUALIZACION DE EMPLEADOS ACTIVOS" <<endl;
     cout << "4. LISTADO POR TURNO (MAÑANA O TARDE)" << endl,
-         cout << "0. SALIR" << endl;
+    cout << "0. SALIR" << endl;
     cout << "-------------------------------------" << endl;
 }
 int MenuEmpleados::seleccionarOpcion()
@@ -54,29 +56,16 @@ int MenuEmpleados::seleccionarOpcion()
 
 void MenuEmpleados::ejecutarOpcion(int opcion)
 {
+    int idBuscar, pos;
+    Empleado empl;
+    string opcionTurno;
+
     switch(opcion)
     {
     case 1:
-    {
-        int idBuscar;
-        bool idValido = false;
-
-        do
-        {
-            cout << "Ingrese ID del empleado: ";
-            cin >> idBuscar;
-            if(idBuscar > 0)
-            {
-                idValido = true;
-            }
-            else
-            {
-                cout << "Error: El ID debe ser un numero positivo" << endl;
-            }
-        }
-        while(!idValido);
-
-        int pos = _repoEmpleado.buscarPorID(idBuscar);
+        cout << "Ingrese ID del empleado: ";
+        cin >> idBuscar;
+        pos = _repoEmpleado.buscarPorID(idBuscar);
 
         if(pos >=0)
         {
@@ -91,18 +80,23 @@ void MenuEmpleados::ejecutarOpcion(int opcion)
             cout << "El empleado con el ID " << idBuscar << " no existe en el sistema." << endl;
         }
         break;
-    }//se agregaron llaves porque  se declararon variables internas del case, sino el compilador tira error
+
     case 2:
-
+        _repoEmpleado.listar();
         break;
+
     case 3:
-
+        _repoEmpleado.listarActivos();
         break;
-    case 4:
 
+    case 4:
+        cout << "Ingrese el turno a buscar (MAÑANA o TARDE): ";
+        cin >> opcionTurno;
+
+        _repoEmpleado.listarPorTurno(opcionTurno);
         break;
     case 0:
-
+        cout << "Saliendo del programa..." << endl;
         break;
     }
 }

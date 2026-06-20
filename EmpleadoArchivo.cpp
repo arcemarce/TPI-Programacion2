@@ -39,6 +39,7 @@ void EmpleadoArchivo::listar(){
 
 void EmpleadoArchivo::listarActivos(){
     Empleado empl;
+    int contadorActivos = 0;
 
     FILE *pEm = fopen(_nombreArchivo, "rb");
     if(pEm == nullptr){
@@ -51,8 +52,14 @@ void EmpleadoArchivo::listarActivos(){
         if(empl.getEstado() == true){
             empl.Mostrar();
             cout << "____________________________________________" << endl;
+            contadorActivos++;
         }
     }
+    if(contadorActivos == 0){
+        cout << "No hay empleados activos registrados." << endl;
+        cout << "____________________________________________" << endl;
+    }
+
     fclose(pEm);
 }
 

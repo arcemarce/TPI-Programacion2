@@ -35,18 +35,14 @@ void Cliente::setEmail(const std::string& email)//el '&' evita la copia en memor
 void Cliente::Cargar()
 {
     Persona::Cargar();
-    cout << "ID Cliente: ";
-    cin >> _idCliente;
     cout << "Email: ";
     cin >> _email;
 }
 
 void Cliente::Mostrar()
 {
-    if(getEstado() == true){
         Persona::Mostrar();
         cout << "ID Cliente: " << _idCliente << endl;
         cout << "Email: " << _email << endl;
-    }
 }
 

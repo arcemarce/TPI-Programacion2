@@ -69,7 +69,7 @@ bool ClienteArchivo::bajaLogica(int id){
         return false;
     }
 
-    clien = leer(id);
+    clien = leer(pos);
     clien.setEstado(false);
     return modificar(clien, pos);
 }
@@ -95,7 +95,8 @@ void ClienteArchivo::listar(){
 
 void ClienteArchivo::listarActivos(){
     Cliente clien;
-
+    int contadorActivos = 0;// si el contador sigue en 0  al cerrar el archivo
+                               //mostramos un mensaje que nos da esta informacion
     FILE *pCliente;
     pCliente = fopen(_nombreArchivo, "rb");
     if(pCliente == nullptr){
@@ -107,14 +108,20 @@ void ClienteArchivo::listarActivos(){
     while (fread(&clien, sizeof clien, 1, pCliente) == 1){
         if(clien.getEstado() == true){
             clien.Mostrar();
+            contadorActivos++;
             cout << "___________________________________________" << endl;
         }
     }
     fclose(pCliente);
+
+    if(contadorActivos == 0){
+        cout << "No hay clientes activos para mostrar." << endl;
+    }
 }
 
 void ClienteArchivo::listarInactivos(){
     Cliente clien;
+    int contadorInactivos = 0;
 
     FILE *pCliente;
     pCliente = fopen(_nombreArchivo, "rb");
@@ -127,9 +134,14 @@ void ClienteArchivo::listarInactivos(){
     while(fread(&clien, sizeof clien, 1, pCliente) == 1){
         if(clien.getEstado() == 0){
             clien.Mostrar();
+            contadorInactivos++;
         }
     }
     fclose(pCliente);
+
+    if(contadorInactivos == 0){
+        cout << "No hay clientes inactivos para mostrar." << endl;
+    }
 }
 
 int ClienteArchivo::buscarPorID(int id){
@@ -139,8 +151,7 @@ int ClienteArchivo::buscarPorID(int id){
     FILE *pCLiente;
     pCLiente = fopen(_nombreArchivo, "rb");
     if(pCLiente == nullptr){
-        cout << "Error: No se pudo abrir el archivo cliente." << endl;
-        return -1;
+       return -1;
     }
     while(fread(&clien, sizeof clien, 1, pCLiente) == 1){
         if(id == clien.getIdCliente()){
@@ -160,8 +171,7 @@ int ClienteArchivo::buscarPorDNI(string dni){
     FILE *pCLiente;
     pCLiente = fopen(_nombreArchivo, "rb");
     if(pCLiente == nullptr){
-        cout << "Error: no se pudo abrir el archivo cliente." << endl;
-        return -1;
+      return -1;
     }
     while(fread(&clien, sizeof clien, 1, pCLiente) == 1){
         if(dni == clien.getDni()){
@@ -180,8 +190,7 @@ bool ClienteArchivo::existeDNI(string dni){
     FILE *pCliente;
     pCliente = fopen(_nombreArchivo, "rb");
     if(pCliente == nullptr){
-        cout << "Error: No se pudo abrir el archivo de clientes." << endl;
-        return 0;
+       return 0;
     }
     while(fread(&clien, sizeof clien, 1, pCliente) == 1){
         if(clien.getDni() == dni){

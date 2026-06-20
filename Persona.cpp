@@ -81,22 +81,17 @@ void Persona::Cargar()
     cout << "Direccion: ";
     cin.ignore(); //limpiamos lo que haya en memoria anteriormente y guarde la direccion correctamente
     cin.getline(_direccion, 100); // para poder guardar direcciones con espacio
-    cout << "Estado (1=Activo, 0=Inactivo): ";
-    cin >> _estado;
+    _estado = true;
 
 }
 
 void Persona::Mostrar()
 {
-    if(_estado == true)
-    {
         cout << _nombre << " " << _apellido << endl;
         cout << "DNI: " <<_dni << endl;
         cout << "Telefono: " << _telefono << endl;
         cout << "Direccion: " << _direccion << endl;
         cout << "Estado: " << _estado << endl;
-    }
-
 }
 
 
